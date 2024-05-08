@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const p = new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest()
+            xhr.open('GET', 'http://hmajax.itheima.net/api/province1')
+            xhr.addEventListener('loadend', () => {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(JSON.parse(xhr.response))
+                }
+                else {
+                    reject(new Error(xhr.response))
+                }
+            })
+            xhr.send()
+        })
+        //调用 then 方法 then方法的返回结果是 Promise 对象，对象状态由回调函数的执行结果决定
+        //如果回调函数中返回的结果是 非 promise 类型的属性，状态为成功，返回值为对象的成功的值
+        p.then(result => {
+            document.write(result.list.join('<br>'))
+        }).catch(error => {
+            // 错误对象要用console.dir详细打印
+            console.dir(error)
+            document.write(error)
+            document.write(error.message)
+        })
+    </script>
+</body>
+
+</html>

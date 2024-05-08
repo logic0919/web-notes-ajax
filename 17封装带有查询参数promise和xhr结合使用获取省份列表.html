@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function myAxios(config) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest()
+                if(config.params){
+                    const paramsObj = new URLSearchParams(config.params)
+                    const queryString = paramsObj.toString()//queryString这个变量是在if语句这个块级作用域内，所以出了if语句这个变量就不能用了
+                    config.url+=`?${queryString}`
+                }
+                xhr.open(config.method || 'GET', config.url)
+                xhr.addEventListener('loadend', () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(JSON.parse(xhr.response))
+                    }
+                    else {
+                        reject(new Error(xhr.response))
+                    }
+                })
+                xhr.send()
+            })
+        }
+        myAxios({
+            method: 'GET',
+            url: 'http://hmajax.itheima.net/api/area',
+            params:{
+                pname:'陕西省',
+                cname:'渭南市'
+            }
+        }).then(result => {
+            document.write(result.list.join('<br>'))
+        }).catch(error => {
+            // 错误对象要用console.dir详细打印
+            console.dir(error)
+            document.write(error)
+            document.write(error.message)
+        })
+    </script>
+</body>
+
+</html>

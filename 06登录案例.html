@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 50px;
+            background-color: antiquewhite;
+        }
+        .success{
+            background-color: aquamarine;
+            color: rgb(7, 99, 69);
+        }
+        .error{
+            background-color: rgb(224, 105, 129);
+            color:rgb(111, 32, 32)
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <input type="text" name="" id=""><br>
+        <input type="password" name="" id=""><br>
+        <input type="button" name="" id="" value="tijiao">
+    </form>
+    <div></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let btn=document.querySelectorAll('input')[2]
+        let div=document.querySelector('div')
+        let infFn=function(flag,inf){
+            div.classList.add(flag)
+            div.innerHTML = inf
+            setTimeout(() => {
+                div.classList.remove(flag)
+                div.innerHTML = ''
+            }, 1000);
+        }
+        btn.addEventListener('click',()=>{
+            let username = document.querySelectorAll('input')[0].value
+            let password = document.querySelectorAll('input')[1].value
+            if(username.length<8){
+                console.log('用户名长度');
+                infFn('error', '用户名长度')
+                return
+            }
+            else if(password.length<6){
+                console.log('密码长度');
+                infFn('error', '密码长度')
+                return
+            }
+            axios({
+                url: 'http://hmajax.itheima.net/api/login',
+                method: 'post',
+                data: {
+                    username,
+                    password
+                }
+            }).then(result => {
+                console.log(result);
+                console.log(result.data.message);
+                infFn('success', result.data.message)
+            }).catch(error => {
+                console.log(error);
+                console.log(error.response.data.message);
+                infFn('error', error.response.data.message)
+            })
+        })
+    </script>
+</body>
+
+</html>

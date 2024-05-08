@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.创建XMLHttpRequest对象
+        // const xhr = new XMLHttpRequest()
+        // 2.配置请求方法和请求url地址
+        // xhr.open("请求方法’,请求ur1网址')
+        // 3.监听loadend事件，接收响应结果
+        // xhr.addEventListener('loadend',()=>console.log(xhr.response))
+        // xhr.send()
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET','http://hmajax.itheima.net/api/city?pname=陕西省')
+        xhr.addEventListener('loadend',()=>{
+            console.log(xhr.response);//json
+            let data=JSON.parse(xhr.response)//json->对象
+            let arr=data.list
+            console.log(arr);
+            console.log(arr.join(''));
+        })
+        xhr.send()
+    </script>
+</body>
+</html>

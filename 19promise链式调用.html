@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 50px;
+            height: 30px;
+            border:1px black solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let pname
+        const divs=document.querySelectorAll('div')
+        axios({
+            url: 'http://hmajax.itheima.net/api/province',
+        }).then(result => {
+            pname=result.data.list[0]
+            divs[0].innerHTML=result.data.list[0]
+            return axios({
+                url: 'http://hmajax.itheima.net/api/city',
+                params: {
+                    pname
+                }
+            })
+        }).then(result=>{
+            let cname= result.data.list[0]
+            divs[1].innerHTML= result.data.list[0]
+            return axios({
+                url: 'http://hmajax.itheima.net/api/area',
+                params: {
+                    pname,
+                    cname
+                }
+            })
+        }).then(result=>{
+            divs[2].innerHTML= result.data.list[0]
+        })
+    </script>
+</body>
+
+</html>

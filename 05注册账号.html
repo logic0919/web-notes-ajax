@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios({
+            url: 'http://hmajax.itheima.net/api/register',
+            method:'post',
+            data:{
+                username:'ljy0919ab',
+                password:'123456aa'
+            }
+        }).then(result => {
+            console.log(result);
+            console.log(result.data.message);
+        }).catch(error=>{
+            console.log(error);
+            console.log(error.response.data.message);
+        })
+    </script>
+</body>
+
+</html>

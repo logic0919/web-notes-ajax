@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" name="" id="">
+    <img src="" alt="">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let inp=document.querySelector('input')
+        let img=document.querySelector('img')
+        let imgurl
+        localStorage.getItem('imgurl') && (img.src = localStorage.getItem('imgurl'))
+        inp.addEventListener('change',e=>{
+            let fd=new FormData()
+            fd.append('img',e.target.files[0])
+            axios({
+                url: 'http://hmajax.itheima.net/api/uploadimg',
+                method:'POST',
+                data:fd
+            }).then(result => {
+                imgurl= result.data.data.url
+                img.src= imgurl
+                console.log(imgurl);
+                localStorage.setItem('imgurl', imgurl)
+            })
+        })
+    </script>
+</body>
+
+</html>

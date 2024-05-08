@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 引入axios库 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let pname = '陕西省'
+        // 使用axios函数
+        axios({
+            url: 'http://hmajax.itheima.net/api/area',
+            method: 'get',//这一行可以省略。这一行表示请求方法为'get'也就是查询数据，这是默认的
+            params: {
+                pname,
+                cname: '渭南市'
+            }
+        }).then(result => {
+            let str = result.data.list.join('<br>')
+            document.body.innerHTML = str
+            console.log(result);
+            console.log(result.data.message);
+        })
+    </script>
+</body>
+
+</html>

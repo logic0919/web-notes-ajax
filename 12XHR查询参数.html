@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let pname='陕西省'
+        let cname='渭南市'
+        // 下一行代码也可以把对象参数拿出来定义
+        // URLSearchParams可以将对象转为查询参数的格式
+        const paramsObj=new URLSearchParams({
+            pname,
+            cname
+        })
+        console.log(paramsObj);
+        const queryString=paramsObj.toString()
+        console.log(queryString);//pname=%E9%99%95%E8%A5%BF%E7%9C%81&cname=%E6%B8%AD%E5%8D%97%E5%B8%82
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', `http://hmajax.itheima.net/api/city?${queryString}`)
+        xhr.addEventListener('loadend', () => {
+            console.log(xhr.response);//json
+            let data = JSON.parse(xhr.response)//json->对象
+            let arr = data.list
+            console.log(arr);
+            console.log(arr.join(''));
+        })
+        xhr.send()
+    </script>
+</body>
+</html>
